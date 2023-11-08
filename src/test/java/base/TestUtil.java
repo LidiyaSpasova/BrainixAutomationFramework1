@@ -13,8 +13,8 @@ import java.util.Properties;
 
 public class TestUtil {
     public WebDriver driver;
-    public String testUrl, browser;
-    public int implicitWait;
+    private String testUrl, browser;
+    private int implicitWait;
 
     @AfterMethod
     public void tearDown() {
@@ -22,9 +22,9 @@ public class TestUtil {
     }
 
     @BeforeMethod
-    public void setDriverAndOpenTestAddress(){
-     readConfig("src/test/resources/congig.properties");
-     setupDriver();
+    public void setupDriverAndOpenTestAddress(){
+     readConfig("src/test/resources/config.properties");
+        setupDriver();
      driver.get(testUrl);
     }
 
@@ -35,13 +35,13 @@ public class TestUtil {
             properties.load(fileInputStream);
             testUrl = properties.getProperty("URL");
             browser = properties.getProperty("browser");
-            implicitWait = Integer.parseInt(properties.getProperty(""));
+            implicitWait = Integer.parseInt(properties.getProperty("implicitWait"));
 
         }catch (IOException e){
             System.out.println(e);
         }
     }
-    private void setDriver(){
+    private void setupDriver(){
         switch (browser){
             case "chrome":
                 driver = setupChromeDriver();
